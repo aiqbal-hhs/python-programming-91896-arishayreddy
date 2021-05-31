@@ -8,7 +8,7 @@ tommy = Turtle()
 tommy.shape("turtle")
 tommy.speed(7)
 
-# Draw three Diamonds:
+# Draw three Triangles:
 draw_triangle(tommy, "maroon", 50, 25, 0)
 draw_triangle(tommy, "yellow", 50, 0, 0)
 draw_triangle(tommy, "black", 50, -25, 0)
