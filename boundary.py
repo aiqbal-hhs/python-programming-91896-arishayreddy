@@ -1,10 +1,8 @@
-print("Welcome")
+age = int(input("How old are you? "))
 
-if 5 < age < 18 or age <= 80:
-  print("You will get a dsicount")
-  if age < 5:
-    print("No discount")
-  if age > 5 or age = 18:
-    print("Yes discount")
-  if age > 18:
-    print("No discount")
+if age >= 5 < 18:
+  print("You can go to school from year 0 to year 13")
+if age < 5:
+    print("You are in Kindergarten")
+if age > 18:
+  print("University, job, Apprenticship :)") 
