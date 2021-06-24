@@ -8,4 +8,4 @@ num_2 = int(input("What is your second number? "))
 num_total = num_1 + num_2
 
 # Print the numbers the user used and give answer
-print("{} + {} = {}".format(num_1, num_2, num_total))
+print(" First number chosen: {} \n Second number chosen: {} \n Therefore {} + {} = {}".format(num_1, num_2, num_1, num_2, num_total))
