@@ -4,7 +4,7 @@ import random
 import time
 import requests
 
-#Def functions used for each variable to reset  the receipt
+#Def functions used for each variable to reset the receipt
 
 def reset():
     textReceipt.delete(1.0,END)
