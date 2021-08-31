@@ -240,5 +240,6 @@ while True:
 
             #TO DO
             # Add Payment option
-            # Add toppings
-            # Add .upper() to name
+            # Add toppings selection
+            # Allow user to add or delete order topping
+           
