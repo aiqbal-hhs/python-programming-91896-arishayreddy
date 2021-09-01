@@ -2,12 +2,21 @@
 
 import re
 import sys
+import random
+
+
 
 """ CONFIG """
+
+
+
+    
 # maximum number of pizzas in one order
 max_pizzas = 5
 # delivery charge (in $)
 delivery_charge = 3.00
+
+
 # list of dictionaries (pizzas) with name and price
 pizzas_available = (
     {"name": "Hawaiian",             "price": 8.5},
@@ -20,8 +29,8 @@ pizzas_available = (
     {"name": "Seafood Deluxe",       "price": 13.5},
     {"name": "Chicago Style",        "price": 13.5},
     {"name": "Roasted Veggie Deluxe", "price": 13.5},
-    {"name": "Peri Peri Chicken",         "price": 13.5},
-    {"name": "Chicken Supreme",             "price": 13.5},
+    {"name": "Peri Peri Chicken",     "price": 13.5},
+    {"name": "Chicken Supreme",       "price": 13.5},
 )
 
 
@@ -45,6 +54,9 @@ class Order():
 
         self.number_pizzas = 0
         self.pizzas = []
+        self.method = True
+        
+
 
         self.total_cost = 0
 
@@ -79,8 +91,11 @@ def get_input(regex, input_message=None, error_message=None, ignore_case=True):
 
 
 def print_order(order):
+    print("Order number: {}".format(random.randint(1,9999)))
+    
     print("| Name: {}".format(order.name))
     print("| Order type: {}".format("Pickup" if order.pickup else "Delivery"))
+    print("| Payment method: {}".format("Eftpos" if order.method else "Cash"))
     if not order.pickup:
         print("| Delivery address: {}".format(order.address))
         print("| Customer phone number: {}".format(order.phone))
@@ -96,10 +111,15 @@ def print_order(order):
     print("| {:61}--------".format(""))
     print("| {:54} Total: ${:.2f}".format("", order.total_cost))
 
-
+# Welcome shown operations of how to order
 print("== Henderson Pizza Palace ==")
-print("==  Order Manager  ==")
-print("Enter 'CC' to cancel order, or 'QQ' to exit program at any time")
+print("==  Order Manager  ==\n")
+print ("---- Operations ----\n")
+print ("QQ/Quit         Quit")
+print ("CC/Cancel       Cancel Order\n")
+
+
+
 print("The first letter of a word is usually only required as input")
 print("A word [enclosed] in brackets is the default option")
 
@@ -110,6 +130,8 @@ orders = []
 pizzas_available = sorted(
     pizzas_available,
     key=lambda k: (k["price"], k["name"]))
+    
+
 
 # keep getting orders, only exits through sys.exit()
 while True:
@@ -125,23 +147,32 @@ while True:
             "Please enter a 'p' (pickup) or a 'd' (delivery)")
         if user_input.lower().startswith("d"):
             order.pickup = False
+        
+        # gets user to choose payment method
+        order.method = get_input(
+              r"$|(?:C|E)",
+              "Payment method: Cash or Eftpos? [Cash]: ", "Please enter a 'c' (Cash) or a 'e' (Eftpos): ").capitalize()
+              
+            
 
         # get name info
         order.name = get_input(
             r"[A-Z]+$",
             "Enter customer name:",
-            "Name must only contain letters")
+            "Name must only contain letters").capitalize()
 
         # get address, phone number info (if the customer wants delivery)
         if not order.pickup:
             order.address = get_input(
                 r"[ -/\w]+$",
                 "Delivery address:",
-                "Address must only contain alphanumeric characters")
+                "Address must only contain alphanumeric characters").capitalize()
             order.phone = get_input(
                 r"\d+$",
                 "Phone number:",
                 "Phone number must only contain numbers")
+            
+        
 
         # get number of pizzas to order,
         # make sure it is more than 0,less than max_pizzas
@@ -160,6 +191,7 @@ while True:
         # print menu (each pizza is assigned a number)
         print("\nWhat pizzas would you like to order?")
         for i, pizza in enumerate(pizzas_available):
+          
             # each pizza's number is its index (i) + 1,
             # so the first pizza is 1
             print("{}: {}".format(str(i+1).zfill(2), pizza['name']))
@@ -174,22 +206,27 @@ while True:
                     "Pizza selection number must"
                     "correspond to those listed above")
                 user_input = int(user_input)
+                
                 try:
                     if user_input == 0:
                         raise IndexError
                     # selects the pizza based on user_input
                     to_add = pizzas_available[user_input-1]
+                    
 
                     # if the pizza has already been ordered,
                     # increment the amount ordered
                     for ordered in order.pizzas:
                         if to_add["name"] == ordered["name"]:
                             ordered["amount"] += 1
+                            
                             break
                     # else add the pizza to the order list
                     else:
                         order.pizzas.append(to_add)
                         order.pizzas[-1]["amount"] = 1
+                        
+
 
                     # if there has been no error,
                     # input is valid, break from the while loop
@@ -205,10 +242,18 @@ while True:
         if not order.pickup:
                 order.total_cost += delivery_charge
 
+        
+          
+
         # add order to list of orders
         orders.append(order)
         print("\nOrder saved. Order was:")
         print_order(order)
+        
+        
+        
+
+        
 
         user_input = get_input(
             r"$|(?:Y|N|O).*",
@@ -238,8 +283,8 @@ while True:
             print("Type 'QQ' to exit the program")
 
 
-            #TO DO
-            # Add Payment option
-            # Add toppings selection
-            # Allow user to add or delete order topping
-           
+            
+            
+
+
+    
