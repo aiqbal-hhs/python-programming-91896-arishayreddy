@@ -3,6 +3,7 @@
 import re
 import sys
 import random
+import datetime
 
 
 
@@ -91,6 +92,7 @@ def get_input(regex, input_message=None, error_message=None, ignore_case=True):
 
 
 def print_order(order):
+    print("Order time: {}".format(datetime.datetime.now()))
     print("Order number: {}".format(random.randint(1,9999)))
     
     print("| Name: {}".format(order.name))
